@@ -1,11 +1,38 @@
+import React, { useState } from "react";
 import "./App.css";
-import Hi from "./Sample";
+
+const COLORS = ["pink", "green", "blue", "yellow", "purple"];
 
 function App() {
+  const [backgroundColor, setBackgroundColor] = useState(COLORS[0]);
+  const [counter, setCounter] = useState(0);
+
+  const onButtonClick = (color) => () => {
+    setBackgroundColor(color);
+    if (color !== backgroundColor) {
+      setCounter(counter + 1);
+    }
+  };
+
   return (
-    <>
-      <Hi />
-    </>
+    <div
+      className="App"
+      style={{
+        backgroundColor,
+      }}
+    >
+      {COLORS.map((color) => (
+        <button
+          type="button"
+          key={color}
+          onClick={onButtonClick(color)}
+          className={backgroundColor === color ? "selected" : ""}
+        >
+          {color}
+        </button>
+      ))}
+      <p>{counter}</p>
+    </div>
   );
 }
 
